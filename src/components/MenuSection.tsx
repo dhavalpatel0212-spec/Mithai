@@ -201,19 +201,19 @@ export function MenuSection() {
               onClick={() => setShowPreferences(null)}
             >
               <motion.div
-                className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden"
+                className="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col"
                 initial={{ opacity: 0, scale: 0.9, y: 50 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 50 }}
                 transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-6">
+                <div className="bg-gradient-to-r from-orange-500 to-yellow-500 text-white p-6 flex-shrink-0">
                   <h3 className="text-xl font-bold">Customize Your Order</h3>
                   <p className="text-orange-100 mt-1">Make it perfect for your taste</p>
                 </div>
 
-                <div className="p-6 space-y-6">
+                <div className="p-6 space-y-6 overflow-y-auto flex-1">
                   {/* Quantity Selection */}
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">
@@ -341,8 +341,11 @@ export function MenuSection() {
                     </div>
                   </div>
 
-                  {/* Add to Cart Button */}
-                  <div className="flex space-x-3 pt-4">
+                  </div>
+                
+                {/* Add to Cart Button - Fixed at bottom */}
+                <div className="p-6 border-t bg-white flex-shrink-0">
+                  <div className="flex space-x-3">
                     <button
                       onClick={() => setShowPreferences(null)}
                       className="flex-1 py-3 px-6 border-2 border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
