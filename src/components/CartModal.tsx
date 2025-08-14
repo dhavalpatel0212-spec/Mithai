@@ -155,7 +155,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="w-20 h-20 object-cover rounded-xl"
+                            className="w-24 h-24 object-cover rounded-xl shadow-md"
                           />
                           <div className="flex-1">
                             <h3 className="font-semibold text-gray-800 text-lg">{item.name}</h3>
@@ -308,110 +308,65 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                       </motion.div>
                     ))}
 
-                    {/* Checkout Section */}
-                    <div className="mt-8 border-t bg-gray-50 rounded-t-3xl p-6">
-                      <div className="space-y-4">
+                    </div>
+
+                  {/* Checkout Section */}
+                  <div className="mt-6 sticky bottom-0 bg-white border-t-2 border-gray-200 p-6 shadow-lg rounded-t-3xl">
                     {/* Order Summary */}
-                    <div className="bg-white rounded-lg p-4 space-y-3">
-                      <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
+                    <div className="mb-6 p-4 bg-gray-50 rounded-xl">
+                      <h3 className="font-bold text-lg text-gray-800 mb-4 flex items-center space-x-2">
                         <span>📋</span>
                         <span>Order Summary</span>
                       </h3>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between">
                           <span>Subtotal ({itemCount} items):</span>
-                          <span>£{calculateTotal().toFixed(2)}</span>
+                          <span className="font-medium">£{calculateTotal().toFixed(2)}</span>
                         </div>
                         <div className="flex justify-between text-green-600">
-                          <span>Delivery:</span>
-                          <span>Free</span>
+                          <span>Delivery Fee:</span>
+                          <span className="font-medium">FREE</span>
                         </div>
-                        <div className="flex justify-between items-center text-lg font-bold border-t pt-2">
+                        <div className="flex justify-between items-center text-xl font-bold border-t border-gray-300 pt-3 mt-3">
                           <span>Total:</span>
                           <span className="text-orange-600">£{calculateTotal().toFixed(2)}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Delivery Information */}
-                    <div className="bg-white rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-gray-800 flex items-center space-x-2">
-                        <span>🚚</span>
-                        <span>Delivery Details</span>
-                      </h4>
-                      <div className="space-y-3">
-                        <input
-                          type="text"
-                          placeholder="Full Name"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                        />
-                        <input
-                          type="tel"
-                          placeholder="Phone Number"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                        />
-                        <textarea
-                          placeholder="Delivery Address"
-                          rows={2}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
-                        />
-                        <input
-                          type="text"
-                          placeholder="Postcode"
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                        />
-                      </div>
-                    </div>
-
-                    {/* Payment Method */}
-                    <div className="bg-white rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-gray-800 flex items-center space-x-2">
-                        <span>💳</span>
-                        <span>Payment Method</span>
-                      </h4>
-                      <div className="space-y-2">
-                        {[
-                          { value: 'card', icon: '💳', label: 'Credit/Debit Card' },
-                          { value: 'paypal', icon: '🅿️', label: 'PayPal' },
-                          { value: 'apple', icon: '📱', label: 'Apple Pay' }
-                        ].map((method) => (
-                          <label key={method.value} className="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
-                            <input type="radio" name="payment" value={method.value} defaultChecked={method.value === 'card'} className="text-orange-500 w-4 h-4" />
-                            <span className="flex items-center space-x-2">
-                              <span>{method.icon}</span>
-                              <span>{method.label}</span>
-                            </span>
-                          </label>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Special Instructions */}
-                    <div className="bg-white rounded-lg p-4">
-                      <h4 className="font-semibold mb-3 text-gray-800 flex items-center space-x-2">
-                        <span>📝</span>
-                        <span>Special Instructions</span>
-                      </h4>
-                      <textarea
-                        placeholder="Any special requests or delivery notes..."
-                        rows={2}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none text-sm"
-                      />
-                    </div>
-
+                    {/* Quick Checkout Button */}
                     <button
-                      className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-4 rounded-xl font-semibold text-lg hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+                      className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-4 rounded-xl font-bold text-lg hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 mb-4"
                       onClick={() => {
                         const orderDetails = cartItems.map(item => 
-                          `${item.name} (x${item.quantity}) - Sugar: ${item.sugarLevel}${item.extraDryFruits ? ', Extra Dry Fruits' : ''}`
-                        ).join('\n');
-                        alert(`Order Details:\n\n${orderDetails}\n\nTotal: £${calculateTotal().toFixed(2)}\n\nPayment functionality will be integrated soon!`);
+                          `${item.name} (x${item.quantity}) - Sugar: ${item.sugarLevel}, Dry Fruits: ${item.extraDryFruits}${item.customNote ? `, Note: ${item.customNote}` : ''}`
+                        ).join('\n\n');
+                        alert(`🍽️ ORDER CONFIRMATION\n\n${orderDetails}\n\n💰 Total: £${calculateTotal().toFixed(2)}\n\n🚚 Free Delivery\n\n⚡ Payment functionality will be integrated soon!`);
                       }}
                     >
                       <span>🔒</span>
-                      <span>Secure Checkout - £{calculateTotal().toFixed(2)}</span>
+                      <span>Proceed to Checkout - £{calculateTotal().toFixed(2)}</span>
                     </button>
 
+                    {/* Payment Options Preview */}
+                    <div className="flex justify-center items-center space-x-4 mb-4 text-sm text-gray-500">
+                      <span className="flex items-center space-x-1">
+                        <span>💳</span>
+                        <span>Card</span>
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center space-x-1">
+                        <span>🅿️</span>
+                        <span>PayPal</span>
+                      </span>
+                      <span>•</span>
+                      <span className="flex items-center space-x-1">
+                        <span>📱</span>
+                        <span>Apple Pay</span>
+                      </span>
+                    </div>
+
+                    {/* Security & Clear Cart */}
                     <div className="text-center space-y-2">
                       <p className="text-xs text-gray-500 flex items-center justify-center space-x-1">
                         <span>🔒</span>
@@ -419,11 +374,10 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                       </p>
                       <button
                         onClick={clearCart}
-                        className="text-gray-500 hover:text-gray-700 transition-colors text-sm underline"
+                        className="text-gray-400 hover:text-red-500 transition-colors text-sm underline"
                       >
                         Clear Cart
                       </button>
-                    </div>
                     </div>
                   </div>
                 </div>
