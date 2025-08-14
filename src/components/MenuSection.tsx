@@ -29,14 +29,19 @@ export function MenuSection() {
       extraDryFruits: preferences.extraDryFruits
     };
     
-    addToCart(itemWithPreferences);
-    setShowPreferences(null);
+    // First show the animation
     setAddedToCart(item.id);
+    setShowPreferences(null);
     
-    // Reset animation after 2 seconds
+    // Add to cart after a brief delay to show the animation
+    setTimeout(() => {
+      addToCart(itemWithPreferences);
+    }, 300);
+    
+    // Reset animation after 2.5 seconds
     setTimeout(() => {
       setAddedToCart(null);
-    }, 2000);
+    }, 2500);
   };
 
   const openPreferences = (itemId: string) => {
@@ -91,20 +96,41 @@ export function MenuSection() {
                 <AnimatePresence>
                   {addedToCart === item.id && (
                     <motion.div
-                      className="absolute inset-0 bg-green-500/90 flex items-center justify-center"
+                      className="absolute inset-0 bg-green-500/95 flex items-center justify-center backdrop-blur-sm z-10"
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.8 }}
-                      transition={{ duration: 0.5 }}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
                     >
                       <motion.div
                         className="text-white text-center"
-                        initial={{ y: 20 }}
-                        animate={{ y: 0 }}
-                        transition={{ delay: 0.2 }}
+                        initial={{ y: 30, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.15, duration: 0.4 }}
                       >
-                        <CheckCircle className="w-16 h-16 mx-auto mb-2" />
-                        <p className="text-xl font-bold">Added to Cart!</p>
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+                        >
+                          <CheckCircle className="w-16 h-16 mx-auto mb-3 drop-shadow-lg" />
+                        </motion.div>
+                        <motion.p 
+                          className="text-xl font-bold drop-shadow-md"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.4 }}
+                        >
+                          Added to Cart!
+                        </motion.p>
+                        <motion.p 
+                          className="text-green-100 text-sm mt-1"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.5 }}
+                        >
+                          {preferences.sugarLevel} sugar • {preferences.extraDryFruits ? 'Extra dry fruits' : 'Standard'}
+                        </motion.p>
                       </motion.div>
                     </motion.div>
                   )}

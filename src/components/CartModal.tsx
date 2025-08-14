@@ -116,7 +116,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
 
             <div className="flex-1 flex flex-col min-h-0">
               {/* Cart Items */}
-              <div className="flex-1 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+              <div className="flex-1 py-4 overflow-y-auto" style={{ maxHeight: 'calc(95vh - 300px)' }}>
                 {cartItems.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6">
                     <ShoppingCart className="w-16 h-16 mb-4" />
@@ -177,17 +177,17 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                         <div className="mb-4">
                           <h4 className="font-medium text-gray-700 mb-3 flex items-center space-x-2">
                             <span>🍯</span>
-                            <span>Sugar Level</span>
+                            <span>Sugar Level: <span className="text-orange-600 font-semibold">{item.sugarLevel}</span></span>
                           </h4>
                           <div className="grid grid-cols-3 gap-2">
                             {['less', 'normal', 'extra'].map((level) => (
                               <button
                                 key={level}
                                 onClick={() => updateSugarLevel(item.id, level as any)}
-                                className={`py-2 px-3 rounded-lg text-sm font-medium transition-colors ${
+                                className={`py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 ${
                                   item.sugarLevel === level
-                                    ? 'bg-orange-500 text-white'
-                                    : 'bg-white text-gray-700 hover:bg-orange-50 border'
+                                    ? 'bg-orange-500 text-white shadow-md scale-105'
+                                    : 'bg-white text-gray-700 hover:bg-orange-50 border hover:border-orange-300'
                                 }`}
                               >
                                 {level.charAt(0).toUpperCase() + level.slice(1)}
