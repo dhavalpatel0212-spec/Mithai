@@ -38,7 +38,7 @@ function App() {
         
         <main>
           <Hero onMenuOpen={() => setIsMenuOpen(true)} />
-          <About />
+          <About onMenuOpen={openMenu} />
           <Reviews />
         </main>
 

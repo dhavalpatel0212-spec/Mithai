@@ -2,11 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Heart, Award, Truck, Users } from 'lucide-react';
+import { Heart, Award, Truck, Users, ShoppingCart } from 'lucide-react';
+import { menuItems } from '../data/menuItems';
+import { useCart } from '../contexts/CartContext';
 
 export function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10%' });
+  const { addToCart, onMenuOpen } = useCart();
 
   return (
     <section id="about" ref={ref} className="py-20 bg-gradient-to-b from-orange-50 to-white">
@@ -26,7 +29,7 @@ export function About() {
             >
               Our Journey Begins <span className="text-orange-500">Here</span>
             </motion.h2>
-            
+
             <motion.p
               className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8"
               initial={{ opacity: 0, y: 30 }}
@@ -85,11 +88,18 @@ export function About() {
                   ))}
                 </div>
                 <div className="flex space-x-3">
-                  <button className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors font-semibold">
-                    Add to Cart
+                  <button 
+                    onClick={() => addToCart(menuItems[0])}
+                    className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center space-x-2"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    <span>Add Kheer to Cart</span>
                   </button>
-                  <button className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold">
-                    Learn More
+                  <button 
+                    onClick={onMenuOpen}
+                    className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold"
+                  >
+                    View Menu
                   </button>
                 </div>
               </div>
@@ -127,11 +137,18 @@ export function About() {
                   ))}
                 </div>
                 <div className="flex space-x-3">
-                  <button className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors font-semibold">
-                    Add to Cart
+                  <button 
+                    onClick={() => addToCart(menuItems[1])}
+                    className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center space-x-2"
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                    <span>Add Matho to Cart</span>
                   </button>
-                  <button className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold">
-                    Learn More
+                  <button 
+                    onClick={onMenuOpen}
+                    className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold"
+                  >
+                    View Menu
                   </button>
                 </div>
               </div>
