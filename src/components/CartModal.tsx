@@ -429,6 +429,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                   </div>
                 </div>
               )}
+            </div>
           </motion.div>
         </motion.div>
       )}
