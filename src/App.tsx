@@ -12,7 +12,7 @@ import { useLenis } from './hooks/useLenis';
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+
   // Initialize Lenis smooth scrolling
   useLenis();
 
@@ -28,6 +28,8 @@ function App() {
     };
   }, [isMenuOpen, isCartOpen]);
 
+  const openMenu = () => setIsMenuOpen(true);
+
   return (
     <CartProvider>
       <div className="min-h-screen bg-white">
@@ -35,10 +37,10 @@ function App() {
           onCartOpen={() => setIsCartOpen(true)} 
           onMenuToggle={() => setIsMenuOpen(true)}
         />
-        
+
         <main>
-          <Hero onMenuOpen={() => setIsMenuOpen(true)} />
-          <About onMenuOpen={openMenu} />
+          <Hero onMenuOpen={openMenu} />
+          <About />
           <Reviews />
         </main>
 
@@ -48,7 +50,7 @@ function App() {
           isOpen={isMenuOpen} 
           onClose={() => setIsMenuOpen(false)} 
         />
-        
+
         <CartModal 
           isOpen={isCartOpen} 
           onClose={() => setIsCartOpen(false)} 

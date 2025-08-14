@@ -17,15 +17,11 @@ export function Hero({ onMenuOpen }: HeroProps) {
   return (
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
+        <img
+          src="https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2565&q=80"
+          alt="Fresh milk and premium dry fruits"
           className="w-full h-full object-cover"
-        >
-          <source src="https://cdn.pixabay.com/vimeo/507728382/cooking-ingredients-117806.mp4?width=1280&hash=ccf19c5d25ed1f0e43d0e5e0a7b3e4e6a5f1f4e4" type="video/mp4" />
-        </video>
+        />
         <div className="absolute inset-0 bg-black/50" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-black/40" />
       </div>
