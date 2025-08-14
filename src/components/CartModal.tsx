@@ -109,10 +109,9 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           onClick={onClose}
-          style={{ touchAction: 'none' }}
         >
           <motion.div
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[95vh] overflow-hidden flex flex-col"
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-lg h-[95vh] flex flex-col"
             initial={{ opacity: 0, x: 400 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 400 }}
@@ -133,9 +132,9 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               </button>
             </div>
 
-            <div className="flex-1 flex flex-col min-h-0">
+            <div className="flex-1 flex flex-col overflow-hidden">
               {/* Cart Items */}
-              <div className="flex-1 py-4 overflow-y-auto custom-scrollbar" style={{ maxHeight: 'calc(95vh - 300px)' }}>
+              <div className="flex-1 py-4 overflow-y-auto custom-scrollbar">
                 {cartItems.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6">
                     <ShoppingCart className="w-16 h-16 mb-4" />
@@ -178,17 +177,27 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                           <div className="flex items-center space-x-3 bg-white rounded-xl p-2 border">
                             <button
                               onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
-                              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-800"
+                              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-red-50 transition-colors text-red-500 hover:text-red-700 border border-red-200 hover:border-red-300"
                               disabled={item.quantity <= 1}
                             >
-                              <Minus className="w-4 h-4" />
+                              <Minus className="w-5 h-5" />
                             </button>
-                            <span className="w-12 text-center font-bold text-lg text-gray-800">{item.quantity}</span>
+                            <input
+                              type="number"
+                              min="1"
+                              max="99"
+                              value={item.quantity}
+                              onChange={(e) => {
+                                const newQuantity = Math.max(1, parseInt(e.target.value) || 1);
+                                updateQuantity(item.id, newQuantity);
+                              }}
+                              className="w-16 text-center font-bold text-lg text-gray-800 border border-gray-300 rounded-lg py-1 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
+                            />
                             <button
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-800"
+                              className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-green-50 transition-colors text-green-600 hover:text-green-700 border border-green-200 hover:border-green-300"
                             >
-                              <Plus className="w-4 h-4" />
+                              <Plus className="w-5 h-5" />
                             </button>
                           </div>
                         </div>
@@ -306,7 +315,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
 
               {/* Checkout Section */}
               {cartItems.length > 0 && (
-                <div className="border-t bg-gray-50 p-6 flex-shrink-0">
+                <div className="border-t bg-gray-50 p-6 flex-shrink-0 max-h-[50vh] overflow-y-auto custom-scrollbar">
                   <div className="space-y-4">
                     {/* Order Summary */}
                     <div className="bg-white rounded-lg p-4 space-y-3">

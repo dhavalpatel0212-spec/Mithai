@@ -18,29 +18,45 @@
 /* Better scrollbar for cart */
 .overflow-y-auto::-webkit-scrollbar,
 .custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track,
 .custom-scrollbar::-webkit-scrollbar-track {
-  background: #f8f9fa;
-  border-radius: 4px;
-  margin: 4px 0;
+  background: #f1f5f9;
+  border-radius: 6px;
+  margin: 8px 0;
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb,
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 4px;
-  border: 2px solid #f8f9fa;
+  background: linear-gradient(135deg, #fb7185, #f97316);
+  border-radius: 6px;
+  border: 2px solid #f1f5f9;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb:hover,
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: linear-gradient(135deg, #e11d48, #ea580c);
+  transform: scale(1.05);
 }
 
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #d1d5db #f8f9fa;
+  scrollbar-color: #fb7185 #f1f5f9;
+}
+
+/* Ensure modal content is scrollable */
+.modal-content {
+  touch-action: auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Fix iOS scrolling */
+@supports (-webkit-overflow-scrolling: touch) {
+  .custom-scrollbar {
+    -webkit-overflow-scrolling: touch;
+  }
 }
