@@ -16,6 +16,8 @@ export interface MenuItem {
   ingredients: string[];
   serves?: string;
   isFavorite?: boolean;
+  extraDryFruits?: 'none' | 'minimum' | 'plus' | 'extra';
+  customNote?: string;
 }
 
 export interface CartItem extends MenuItem {

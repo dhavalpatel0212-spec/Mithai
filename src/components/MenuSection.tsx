@@ -83,6 +83,7 @@ export function MenuSection() {
       price: selectedVariant?.price || item.price,
       weight: selectedVariant?.weight || item.weight,
       extraDryFruits: preferences.extraDryFruits,
+      customNote: preferences.customNote,
     };
 
     setAddedToCart(item.id);

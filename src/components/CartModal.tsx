@@ -28,8 +28,8 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
   const [cartItems, setCartItems] = useState<CartItemExtended[]>(
     items.map(item => ({
       ...item,
-      extraDryFruits: 'none' as const,
-      customNote: ''
+      extraDryFruits: item.extraDryFruits || 'none',
+      customNote: item.customNote || ''
     }))
   );
 
@@ -39,8 +39,8 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
         const existing = current.find(c => c.id === item.id);
         return existing ? { ...existing, ...item } : {
           ...item,
-          extraDryFruits: 'none' as const,
-          customNote: ''
+          extraDryFruits: item.extraDryFruits || 'none',
+          customNote: item.customNote || ''
         };
       });
       return newItems;
