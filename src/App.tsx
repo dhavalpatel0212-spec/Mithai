@@ -19,23 +19,13 @@ function App() {
   // Prevent body scroll when cart modal is open
   useEffect(() => {
     if (isCartOpen) {
-      const scrollY = window.scrollY;
-      document.body.setAttribute('data-scroll-y', scrollY.toString());
-      document.body.classList.add('scroll-lock');
-      document.body.style.top = `-${scrollY}px`;
+      document.body.style.overflow = 'hidden';
     } else {
-      const scrollY = document.body.getAttribute('data-scroll-y');
-      document.body.classList.remove('scroll-lock');
-      document.body.style.top = '';
-      document.body.removeAttribute('data-scroll-y');
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY));
-      }
+      document.body.style.overflow = 'unset';
     }
+    
     return () => {
-      document.body.classList.remove('scroll-lock');
-      document.body.style.top = '';
-      document.body.removeAttribute('data-scroll-y');
+      document.body.style.overflow = 'unset';
     };
   }, [isCartOpen]);
 

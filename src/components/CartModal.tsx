@@ -132,7 +132,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               </button>
             </div>
 
-            <div className="flex-1 overflow-hidden">
+            <div className="flex-1 overflow-y-auto">
               {cartItems.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6">
                   <ShoppingCart className="w-16 h-16 mb-4" />
@@ -140,8 +140,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                   <p className="text-sm text-center">Add some delicious sweets to get started!</p>
                 </div>
               ) : (
-                <div className="h-full overflow-y-auto custom-scrollbar">
-                  <div className="p-6 space-y-6">
+                <div className="p-6 space-y-6">
                     {cartItems.map((item) => (
                       <motion.div
                         key={item.id}
@@ -427,7 +426,6 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                     </div>
                     </div>
                   </div>
-                </div>
                 </div>
               )}
             </div>
