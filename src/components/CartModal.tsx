@@ -307,11 +307,10 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                         </div>
                       </motion.div>
                     ))}
+                </div>
 
-                    </div>
-
-                  {/* Checkout Section */}
-                  <div className="mt-6 sticky bottom-0 bg-white border-t-2 border-gray-200 p-6 shadow-lg rounded-t-3xl">
+                {/* Checkout Section */}
+                <div className="mt-6 sticky bottom-0 bg-white border-t-2 border-gray-200 p-6 shadow-lg rounded-t-3xl">
                     {/* Order Summary */}
                     <div className="mb-6 p-4 bg-gray-50 rounded-xl">
                       <h3 className="font-bold text-lg text-gray-800 mb-4 flex items-center space-x-2">
