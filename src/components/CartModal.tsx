@@ -16,7 +16,8 @@ interface CartItemExtended {
   image: string;
   quantity: number;
   sugarLevel: 'less' | 'normal' | 'extra';
-  extraDryFruits: boolean;
+  extraDryFruits: 'none' | 'minimum' | 'plus' | 'extra';
+  customNote: string;
 }
 
 export function CartModal({ isOpen, onClose }: CartModalProps) {
@@ -25,7 +26,8 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
     items.map(item => ({
       ...item,
       sugarLevel: 'normal' as const,
-      extraDryFruits: false
+      extraDryFruits: 'none' as const,
+      customNote: ''
     }))
   );
 
@@ -37,7 +39,8 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
         return existing ? { ...existing, ...item } : {
           ...item,
           sugarLevel: 'normal' as const,
-          extraDryFruits: false
+          extraDryFruits: 'none' as const,
+          customNote: ''
         };
       });
       return newItems;
@@ -52,19 +55,34 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
     );
   };
 
-  const toggleExtraDryFruits = (id: string) => {
+  const updateDryFruits = (id: string, extraDryFruits: 'none' | 'minimum' | 'plus' | 'extra') => {
     setCartItems(current =>
       current.map(item =>
-        item.id === id ? { ...item, extraDryFruits: !item.extraDryFruits } : item
+        item.id === id ? { ...item, extraDryFruits } : item
+      )
+    );
+  };
+
+  const updateCustomNote = (id: string, customNote: string) => {
+    setCartItems(current =>
+      current.map(item =>
+        item.id === id ? { ...item, customNote } : item
       )
     );
   };
 
   const calculateItemTotal = (item: CartItemExtended) => {
     let price = item.price * item.quantity;
-    if (item.extraDryFruits) {
-      price += 2 * item.quantity; // £2 extra per item for extra dry fruits
-    }
+    
+    // Add dry fruits pricing
+    const dryFruitsPricing = {
+      'none': 0,
+      'minimum': 1,
+      'plus': 2,
+      'extra': 3
+    };
+    
+    price += dryFruitsPricing[item.extraDryFruits] * item.quantity;
     return price;
   };
 
@@ -197,29 +215,39 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                           </div>
                         </div>
 
-                        {/* Extra Dry Fruits */}
+                        {/* Dry Fruits Selection */}
                         <div className="mb-4">
-                          <button
-                            onClick={() => toggleExtraDryFruits(item.id)}
-                            className={`w-full p-3 rounded-lg border-2 transition-colors ${
-                              item.extraDryFruits
-                                ? 'border-orange-500 bg-orange-50'
-                                : 'border-gray-200 hover:border-orange-300'
-                            }`}
-                          >
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center space-x-2">
-                                <span className="text-lg">🌰</span>
-                                <span className="font-medium">Extra Premium Dry Fruits</span>
-                              </div>
-                              <div className="text-right">
-                                <div className="text-sm text-orange-600 font-semibold">+£2.00</div>
-                                <div className="text-xs text-gray-500">per item</div>
-                              </div>
-                            </div>
-                          </button>
+                          <h4 className="font-medium text-gray-700 mb-3 flex items-center space-x-2">
+                            <span>🌰</span>
+                            <span>Premium Dry Fruits: <span className="text-orange-600 font-semibold capitalize">{item.extraDryFruits}</span></span>
+                          </h4>
+                          <div className="grid grid-cols-2 gap-2">
+                            {[
+                              { value: 'none', label: 'None', price: 0 },
+                              { value: 'minimum', label: 'Minimum', price: 1 },
+                              { value: 'plus', label: 'Plus', price: 2 },
+                              { value: 'extra', label: 'Extra', price: 3 }
+                            ].map((option) => (
+                              <button
+                                key={option.value}
+                                onClick={() => updateDryFruits(item.id, option.value as any)}
+                                className={`p-2 rounded-lg border-2 transition-all duration-200 text-sm ${
+                                  item.extraDryFruits === option.value
+                                    ? 'border-orange-500 bg-orange-50'
+                                    : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50'
+                                }`}
+                              >
+                                <div className="text-center">
+                                  <div className="font-semibold">{option.label}</div>
+                                  <div className="text-xs text-orange-600">
+                                    {option.price === 0 ? 'Standard' : `+£${option.price}.00`}
+                                  </div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
                           
-                          {item.extraDryFruits && (
+                          {item.extraDryFruits !== 'none' && (
                             <motion.div
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: 'auto' }}
@@ -243,6 +271,23 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                               </div>
                             </motion.div>
                           )}
+                        </div>
+
+                        {/* Custom Notes */}
+                        <div className="mb-4">
+                          <h4 className="font-medium text-gray-700 mb-2 flex items-center space-x-2">
+                            <span>📝</span>
+                            <span>Special Requests</span>
+                          </h4>
+                          <textarea
+                            value={item.customNote}
+                            onChange={(e) => updateCustomNote(item.id, e.target.value)}
+                            placeholder="Any special requests for this item..."
+                            rows={2}
+                            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none text-sm"
+                            maxLength={150}
+                          />
+                          <div className="text-xs text-gray-400 mt-1 text-right">{item.customNote.length}/150</div>
                         </div>
 
                         {/* Item Total */}

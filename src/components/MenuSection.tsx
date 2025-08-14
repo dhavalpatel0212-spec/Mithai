@@ -9,7 +9,8 @@ import { MenuItem } from '../types';
 interface CartPreferences {
   quantity: number;
   sugarLevel: 'less' | 'normal' | 'extra';
-  extraDryFruits: boolean;
+  extraDryFruits: 'none' | 'minimum' | 'plus' | 'extra';
+  customNote: string;
 }
 
 export function MenuSection() {
@@ -20,7 +21,8 @@ export function MenuSection() {
   const [preferences, setPreferences] = useState<CartPreferences>({
     quantity: 1,
     sugarLevel: 'normal',
-    extraDryFruits: false
+    extraDryFruits: 'none',
+    customNote: ''
   });
   const [addedToCart, setAddedToCart] = useState<string | null>(null);
 
@@ -53,7 +55,8 @@ export function MenuSection() {
     setPreferences({
       quantity: 1,
       sugarLevel: 'normal',
-      extraDryFruits: false
+      extraDryFruits: 'none',
+      customNote: ''
     });
   };
 
@@ -134,7 +137,7 @@ export function MenuSection() {
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.5 }}
                         >
-                          Quantity: {preferences.quantity} • {preferences.sugarLevel} sugar • {preferences.extraDryFruits ? 'Extra dry fruits' : 'Standard'}
+                          Quantity: {preferences.quantity} • {preferences.sugarLevel} sugar • Dry fruits: {preferences.extraDryFruits}
                         </motion.p>
                       </motion.div>
                     </motion.div>
@@ -250,30 +253,65 @@ export function MenuSection() {
                     </div>
                   </div>
 
-                  {/* Extra Dry Fruits */}
+                  {/* Dry Fruits Selection */}
                   <div>
-                    <button
-                      onClick={() => setPreferences(prev => ({ ...prev, extraDryFruits: !prev.extraDryFruits }))}
-                      className={`w-full p-4 rounded-xl border-2 transition-all duration-200 ${
-                        preferences.extraDryFruits
-                          ? 'border-orange-500 bg-orange-50'
-                          : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-3">
-                          <span className="text-2xl">🌰</span>
-                          <div className="text-left">
-                            <div className="font-semibold">Extra Premium Dry Fruits</div>
-                            <div className="text-sm text-gray-500">Almonds, cashews, pistachios & raisins</div>
+                    <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">
+                      <span>🌰</span>
+                      <span>Premium Dry Fruits</span>
+                    </h4>
+                    <div className="grid grid-cols-2 gap-3">
+                      {[
+                        { value: 'none', label: 'None', price: 0 },
+                        { value: 'minimum', label: 'Minimum', price: 1 },
+                        { value: 'plus', label: 'Plus', price: 2 },
+                        { value: 'extra', label: 'Extra', price: 3 }
+                      ].map((option) => (
+                        <button
+                          key={option.value}
+                          onClick={() => setPreferences(prev => ({ ...prev, extraDryFruits: option.value as any }))}
+                          className={`p-3 rounded-xl border-2 transition-all duration-200 ${
+                            preferences.extraDryFruits === option.value
+                              ? 'border-orange-500 bg-orange-50'
+                              : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50'
+                          }`}
+                        >
+                          <div className="text-center">
+                            <div className="font-semibold text-sm">{option.label}</div>
+                            <div className="text-xs text-orange-600 font-medium">
+                              {option.price === 0 ? 'Standard' : `+£${option.price}.00`}
+                            </div>
                           </div>
-                        </div>
-                        <div className="text-right">
-                          <div className="font-semibold text-orange-600">+£2.00</div>
-                          <div className="text-xs text-gray-500">per serving</div>
-                        </div>
+                        </button>
+                      ))}
+                    </div>
+                    <div className="mt-3 text-xs text-gray-500 bg-gray-50 p-3 rounded-lg">
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>• <strong>Minimum:</strong> Light sprinkle</div>
+                        <div>• <strong>Plus:</strong> Good amount</div>
+                        <div>• <strong>Extra:</strong> Generous portion</div>
+                        <div>• <strong>None:</strong> Just the dessert</div>
                       </div>
-                    </button>
+                    </div>
+                  </div>
+
+                  {/* Custom Notes */}
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">
+                      <span>📝</span>
+                      <span>Special Requests</span>
+                    </h4>
+                    <textarea
+                      value={preferences.customNote}
+                      onChange={(e) => setPreferences(prev => ({ ...prev, customNote: e.target.value }))}
+                      placeholder="Any special requests, allergies, or preferences? (e.g., 'Extra cardamom', 'No nuts', etc.)"
+                      rows={3}
+                      className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none text-sm"
+                      maxLength={200}
+                    />
+                    <div className="flex justify-between items-center mt-1">
+                      <span className="text-xs text-gray-500">Optional - Let us know your preferences</span>
+                      <span className="text-xs text-gray-400">{preferences.customNote.length}/200</span>
+                    </div>
                   </div>
 
                   {/* Add to Cart Button */}

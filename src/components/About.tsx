@@ -97,17 +97,17 @@ export function About() {
                 </div>
                 <div className="flex space-x-3">
                   <button 
-                    onClick={() => addToCart(menuItems[0])}
+                    onClick={() => scrollToSection('menu')}
                     className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center space-x-2"
                   >
                     <ShoppingCart className="w-4 h-4" />
-                    <span>Add Kheer to Cart</span>
+                    <span>Order Kheer Now</span>
                   </button>
                   <button 
                     onClick={() => scrollToSection('menu')}
                     className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold"
                   >
-                    View Menu
+                    View Full Menu
                   </button>
                 </div>
               </div>
@@ -146,17 +146,17 @@ export function About() {
                 </div>
                 <div className="flex space-x-3">
                   <button 
-                    onClick={() => addToCart(menuItems[1])}
+                    onClick={() => scrollToSection('menu')}
                     className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center space-x-2"
                   >
                     <ShoppingCart className="w-4 h-4" />
-                    <span>Add Matho to Cart</span>
+                    <span>Order Matho Now</span>
                   </button>
                   <button 
                     onClick={() => scrollToSection('menu')}
                     className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold"
                   >
-                    View Menu
+                    View Full Menu
                   </button>
                 </div>
               </div>
