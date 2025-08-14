@@ -104,7 +104,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-lg h-[95vh] flex flex-col overflow-hidden"
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[95vh] flex flex-col overflow-hidden"
             initial={{ opacity: 0, x: 400 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 400 }}
@@ -125,10 +125,10 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               </button>
             </div>
 
-            {/* Scrollable Content Area */}
-            <div className="flex-1 flex flex-col min-h-0">
+            {/* Content Area */}
+            <div className="flex-1 flex flex-col overflow-hidden">
               {cartItems.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6">
+                <div className="flex flex-col items-center justify-center flex-1 text-gray-500 px-6">
                   <ShoppingCart className="w-16 h-16 mb-4" />
                   <p className="text-lg font-semibold mb-2">Your cart is empty</p>
                   <p className="text-sm text-center">Add some delicious sweets to get started!</p>
@@ -136,7 +136,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               ) : (
                 <>
                   {/* Scrollable Items Area */}
-                  <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+                  <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 min-h-0">
                     {cartItems.map((item) => (
                       <motion.div
                         key={item.id}
