@@ -14,8 +14,8 @@ export function Hero() {
     <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1563636619-e9143da7973b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2565&q=80"
-          alt="Fresh milk and premium dry fruits"
+          src="/attached_assets/Gemini_Generated_Image_44mhoy44mhoy44mh_1755210609882.png"
+          alt="Traditional Indian sweets with kheer, milk and premium dry fruits"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-black/50" />
