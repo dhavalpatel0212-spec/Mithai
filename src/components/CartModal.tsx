@@ -15,7 +15,7 @@ interface CartItemExtended {
   price: number;
   image: string;
   quantity: number;
-  sugarLevel: 'less' | 'normal' | 'extra';
+  weight?: string;
   extraDryFruits: 'none' | 'minimum' | 'plus' | 'extra';
   customNote: string;
 }
@@ -25,7 +25,6 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
   const [cartItems, setCartItems] = useState<CartItemExtended[]>(
     items.map(item => ({
       ...item,
-      sugarLevel: 'normal' as const,
       extraDryFruits: 'none' as const,
       customNote: ''
     }))
@@ -38,7 +37,6 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
         const existing = current.find(c => c.id === item.id);
         return existing ? { ...existing, ...item } : {
           ...item,
-          sugarLevel: 'normal' as const,
           extraDryFruits: 'none' as const,
           customNote: ''
         };
@@ -47,13 +45,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
     });
   }, [items]);
 
-  const updateSugarLevel = (id: string, sugarLevel: 'less' | 'normal' | 'extra') => {
-    setCartItems(current =>
-      current.map(item =>
-        item.id === id ? { ...item, sugarLevel } : item
-      )
-    );
-  };
+  
 
   const updateDryFruits = (id: string, extraDryFruits: 'none' | 'minimum' | 'plus' | 'extra') => {
     setCartItems(current =>
@@ -200,28 +192,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                           </div>
                         </div>
 
-                        {/* Sugar Level Selection */}
-                        <div className="mb-4">
-                          <h4 className="font-medium text-gray-700 mb-3 flex items-center space-x-2">
-                            <span>🍯</span>
-                            <span>Sugar Level: <span className="text-orange-600 font-semibold">{item.sugarLevel}</span></span>
-                          </h4>
-                          <div className="grid grid-cols-3 gap-2">
-                            {['less', 'normal', 'extra'].map((level) => (
-                              <button
-                                key={level}
-                                onClick={() => updateSugarLevel(item.id, level as any)}
-                                className={`py-2 px-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                                  item.sugarLevel === level
-                                    ? 'bg-orange-500 text-white shadow-md scale-105'
-                                    : 'bg-white text-gray-700 hover:bg-orange-50 border hover:border-orange-300'
-                                }`}
-                              >
-                                {level.charAt(0).toUpperCase() + level.slice(1)}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
+                        
 
                         {/* Dry Fruits Selection */}
                         <div className="mb-4">

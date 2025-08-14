@@ -3,6 +3,14 @@ export interface MenuItem {
   name: string;
   description: string;
   price: number;
+  originalPrice?: number | null;
+  weight: string;
+  variants?: {
+    id: string;
+    weight: string;
+    price: number;
+    originalPrice?: number | null;
+  }[];
   image: string;
   category: string;
   ingredients: string[];

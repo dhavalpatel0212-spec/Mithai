@@ -8,7 +8,7 @@ import { MenuItem } from '../types';
 
 interface CartPreferences {
   quantity: number;
-  sugarLevel: 'less' | 'normal' | 'extra';
+  selectedVariant: string;
   extraDryFruits: 'none' | 'minimum' | 'plus' | 'extra';
   customNote: string;
 }
@@ -20,16 +20,19 @@ export function MenuSection() {
   const [showPreferences, setShowPreferences] = useState<string | null>(null);
   const [preferences, setPreferences] = useState<CartPreferences>({
     quantity: 1,
-    sugarLevel: 'normal',
+    selectedVariant: '',
     extraDryFruits: 'none',
     customNote: ''
   });
   const [addedToCart, setAddedToCart] = useState<string | null>(null);
 
   const handleAddToCart = (item: MenuItem) => {
+    const selectedVariant = item.variants?.find(v => v.id === preferences.selectedVariant);
     const itemWithPreferences = {
       ...item,
-      sugarLevel: preferences.sugarLevel,
+      id: selectedVariant?.id || item.id,
+      price: selectedVariant?.price || item.price,
+      weight: selectedVariant?.weight || item.weight,
       extraDryFruits: preferences.extraDryFruits
     };
     
@@ -51,10 +54,11 @@ export function MenuSection() {
   };
 
   const openPreferences = (itemId: string) => {
+    const item = menuItems.find(item => item.id === itemId);
     setShowPreferences(itemId);
     setPreferences({
       quantity: 1,
-      sugarLevel: 'normal',
+      selectedVariant: item?.variants?.[0]?.id || itemId + '-500g',
       extraDryFruits: 'none',
       customNote: ''
     });
@@ -137,7 +141,7 @@ export function MenuSection() {
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.5 }}
                         >
-                          Quantity: {preferences.quantity} • {preferences.sugarLevel} sugar • Dry fruits: {preferences.extraDryFruits}
+                          Quantity: {preferences.quantity} • Weight: {item.variants?.find(v => v.id === preferences.selectedVariant)?.weight || item.weight} • Dry fruits: {preferences.extraDryFruits}
                         </motion.p>
                       </motion.div>
                     </motion.div>
@@ -230,27 +234,44 @@ export function MenuSection() {
                     </div>
                   </div>
 
-                  {/* Sugar Level */}
+                  
+
+                  {/* Weight Selection */}
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">
-                      <span>🍯</span>
-                      <span>Sugar Level</span>
+                      <span>⚖️</span>
+                      <span>Choose Size</span>
                     </h4>
-                    <div className="grid grid-cols-3 gap-3">
-                      {['less', 'normal', 'extra'].map((level) => (
-                        <button
-                          key={level}
-                          onClick={() => setPreferences(prev => ({ ...prev, sugarLevel: level as any }))}
-                          className={`py-3 px-4 rounded-xl text-sm font-medium transition-all duration-200 ${
-                            preferences.sugarLevel === level
-                              ? 'bg-orange-500 text-white shadow-lg scale-105'
-                              : 'bg-gray-100 text-gray-700 hover:bg-orange-50 hover:text-orange-600'
-                          }`}
-                        >
-                          {level.charAt(0).toUpperCase() + level.slice(1)}
-                        </button>
-                      ))}
-                    </div>
+                    {item.variants && (
+                      <div className="space-y-2 mb-4">
+                        {item.variants.map((variant) => (
+                          <button
+                            key={variant.id}
+                            onClick={() => setPreferences(prev => ({ ...prev, selectedVariant: variant.id }))}
+                            className={`w-full p-3 rounded-xl border-2 transition-all duration-200 text-left ${
+                              preferences.selectedVariant === variant.id
+                                ? 'border-orange-500 bg-orange-50'
+                                : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50'
+                            }`}
+                          >
+                            <div className="flex justify-between items-center">
+                              <div>
+                                <div className="font-semibold">{variant.weight}</div>
+                                {variant.originalPrice && (
+                                  <div className="text-xs text-gray-500">
+                                    <span className="line-through">£{variant.originalPrice.toFixed(2)}</span>
+                                    <span className="ml-1 text-green-600 font-semibold">OFFER</span>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="text-right">
+                                <div className="font-bold text-orange-600">£{variant.price.toFixed(2)}</div>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Dry Fruits Selection */}
