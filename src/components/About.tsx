@@ -215,7 +215,7 @@ export function About() {
               transition={{ duration: 0.8, delay: 1.6, ease: [0.16, 1, 0.3, 1] }}
             >
               <img
-                src="https://images.pexels.com/photos/1435904/pexels-photo-1435904.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src="/attached_assets/WhatsApp Image 2025-08-14 at 15.36.19_1755210774635.jpeg"
                 alt="Traditional cooking ingredients"
                 className="rounded-3xl shadow-2xl w-full h-96 object-cover"
               />
