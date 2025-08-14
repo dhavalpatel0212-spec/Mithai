@@ -27,7 +27,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-md h-[90vh] overflow-hidden flex flex-col"
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col"
             initial={{ opacity: 0, x: 400 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 400 }}
@@ -44,8 +44,8 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               </button>
             </div>
 
-            <div className="flex-1 flex flex-col">
-              <div className="flex-1 py-6 overflow-y-auto">
+            <div className="flex-1 flex flex-col min-h-0">
+              <div className="flex-1 py-6 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
                 {items.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-gray-500">
                     <ShoppingCart className="w-16 h-16 mb-4" />
@@ -100,7 +100,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               </div>
 
               {items.length > 0 && (
-                <div className="border-t bg-gray-50 p-6">
+                <div className="border-t bg-gray-50 p-6 flex-shrink-0">
                   <div className="space-y-4">
                     {/* Order Summary */}
                     <div className="space-y-2">
@@ -122,23 +122,23 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                     <div className="space-y-3">
                       <div className="bg-white rounded-lg border p-4">
                         <h4 className="font-semibold mb-3 text-gray-800">Payment Method</h4>
-                        <div className="space-y-2">
-                          <label className="flex items-center space-x-3 cursor-pointer">
-                            <input type="radio" name="payment" value="card" defaultChecked className="text-orange-500" />
+                        <div className="space-y-3">
+                          <label className="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="payment" value="card" defaultChecked className="text-orange-500 w-4 h-4" />
                             <span className="flex items-center space-x-2">
                               <span>💳</span>
                               <span>Credit/Debit Card</span>
                             </span>
                           </label>
-                          <label className="flex items-center space-x-3 cursor-pointer">
-                            <input type="radio" name="payment" value="paypal" className="text-orange-500" />
+                          <label className="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="payment" value="paypal" className="text-orange-500 w-4 h-4" />
                             <span className="flex items-center space-x-2">
                               <span>🅿️</span>
                               <span>PayPal</span>
                             </span>
                           </label>
-                          <label className="flex items-center space-x-3 cursor-pointer">
-                            <input type="radio" name="payment" value="apple" className="text-orange-500" />
+                          <label className="flex items-center space-x-3 cursor-pointer p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                            <input type="radio" name="payment" value="apple" className="text-orange-500 w-4 h-4" />
                             <span className="flex items-center space-x-2">
                               <span>📱</span>
                               <span>Apple Pay</span>
