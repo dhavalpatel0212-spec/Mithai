@@ -104,7 +104,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[95vh] flex flex-col overflow-hidden"
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-lg h-[95vh] flex flex-col"
             initial={{ opacity: 0, x: 400 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 400 }}
@@ -126,7 +126,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
             </div>
 
             {/* Content Area */}
-            <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-1 flex flex-col min-h-0">
               {cartItems.length === 0 ? (
                 <div className="flex flex-col items-center justify-center flex-1 text-gray-500 px-6">
                   <ShoppingCart className="w-16 h-16 mb-4" />
@@ -134,9 +134,10 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                   <p className="text-sm text-center">Add some delicious sweets to get started!</p>
                 </div>
               ) : (
-                <>
+                <div className="flex flex-col h-full min-h-0">
                   {/* Scrollable Items Area */}
-                  <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6 min-h-0">
+                  <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6"
+                       style={{ minHeight: 0, maxHeight: 'calc(100% - 380px)' }}>
                     {cartItems.map((item) => (
                       <motion.div
                         key={item.id}
@@ -285,7 +286,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                   </div>
 
                   {/* Fixed Checkout Section */}
-                  <div className="flex-shrink-0 bg-white border-t-2 border-gray-200 p-6 shadow-lg">
+                  <div className="flex-shrink-0 bg-white border-t-2 border-gray-200 p-6 shadow-lg overflow-hidden">
                     {/* Order Summary */}
                     <div className="mb-6 p-4 bg-gray-50 rounded-xl">
                       <h3 className="font-bold text-lg text-gray-800 mb-4 flex items-center space-x-2">
@@ -449,7 +450,7 @@ Your cart has been preserved.
                       </button>
                     </div>
                   </div>
-                </>
+                </div>
               )}
             </div>
           </motion.div>
