@@ -109,6 +109,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           onClick={onClose}
+          style={{ touchAction: 'none' }}
         >
           <motion.div
             className="bg-white rounded-3xl shadow-2xl w-full max-w-lg max-h-[95vh] overflow-hidden flex flex-col"
@@ -134,7 +135,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
 
             <div className="flex-1 flex flex-col min-h-0">
               {/* Cart Items */}
-              <div className="flex-1 py-4 overflow-y-auto" style={{ maxHeight: 'calc(95vh - 300px)' }}>
+              <div className="flex-1 py-4 overflow-y-auto custom-scrollbar" style={{ maxHeight: 'calc(95vh - 300px)' }}>
                 {cartItems.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6">
                     <ShoppingCart className="w-16 h-16 mb-4" />

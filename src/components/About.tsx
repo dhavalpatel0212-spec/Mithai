@@ -2,14 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
-import { Heart, Award, Truck, Users, ShoppingCart } from 'lucide-react';
-import { menuItems } from '../data/menuItems';
-import { useCart } from '../contexts/CartContext';
+import { Heart, Award, Truck, Users } from 'lucide-react';
 
 export function About() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10%' });
-  const { addToCart, onMenuOpen } = useCart();
 
   // Function to scroll to a specific section
   const scrollToSection = (sectionId) => {
@@ -95,19 +92,12 @@ export function About() {
                     </div>
                   ))}
                 </div>
-                <div className="flex space-x-3">
+                <div className="flex justify-center">
                   <button 
                     onClick={() => scrollToSection('menu')}
-                    className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center space-x-2"
+                    className="bg-orange-500 text-white py-3 px-8 rounded-full hover:bg-orange-600 transition-colors font-semibold"
                   >
-                    <ShoppingCart className="w-4 h-4" />
-                    <span>Order Kheer Now</span>
-                  </button>
-                  <button 
-                    onClick={() => scrollToSection('menu')}
-                    className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold"
-                  >
-                    View Full Menu
+                    View in Menu
                   </button>
                 </div>
               </div>
@@ -144,19 +134,12 @@ export function About() {
                     </div>
                   ))}
                 </div>
-                <div className="flex space-x-3">
+                <div className="flex justify-center">
                   <button 
                     onClick={() => scrollToSection('menu')}
-                    className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors font-semibold flex items-center justify-center space-x-2"
+                    className="bg-orange-500 text-white py-3 px-8 rounded-full hover:bg-orange-600 transition-colors font-semibold"
                   >
-                    <ShoppingCart className="w-4 h-4" />
-                    <span>Order Matho Now</span>
-                  </button>
-                  <button 
-                    onClick={() => scrollToSection('menu')}
-                    className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold"
-                  >
-                    View Full Menu
+                    View in Menu
                   </button>
                 </div>
               </div>
