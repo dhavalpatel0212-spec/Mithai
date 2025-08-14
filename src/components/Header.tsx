@@ -5,10 +5,9 @@ import { useCart } from '../contexts/CartContext';
 
 interface HeaderProps {
   onCartOpen: () => void;
-  onMenuToggle: () => void;
 }
 
-export function Header({ onCartOpen, onMenuToggle }: HeaderProps) {
+export function Header({ onCartOpen }: HeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { itemCount } = useCart();
@@ -64,7 +63,7 @@ export function Header({ onCartOpen, onMenuToggle }: HeaderProps) {
               Home
             </button>
             <button 
-              onClick={onMenuToggle}
+              onClick={() => scrollToSection('menu')}
               className={`transition-colors hover:text-orange-500 ${isScrolled ? 'text-gray-700' : 'text-white'}`}
             >
               Menu
@@ -132,7 +131,7 @@ export function Header({ onCartOpen, onMenuToggle }: HeaderProps) {
                 Home
               </button>
               <button 
-                onClick={onMenuToggle}
+                onClick={() => scrollToSection('menu')}
                 className="text-gray-700 hover:text-orange-500 transition-colors text-left"
               >
                 Menu

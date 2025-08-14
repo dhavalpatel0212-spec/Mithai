@@ -11,6 +11,14 @@ export function About() {
   const isInView = useInView(ref, { once: true, margin: '-10%' });
   const { addToCart, onMenuOpen } = useCart();
 
+  // Function to scroll to a specific section
+  const scrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <section id="about" ref={ref} className="py-20 bg-gradient-to-b from-orange-50 to-white">
       <div className="container mx-auto px-6">
@@ -96,7 +104,7 @@ export function About() {
                     <span>Add Kheer to Cart</span>
                   </button>
                   <button 
-                    onClick={onMenuOpen}
+                    onClick={() => scrollToSection('menu')}
                     className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold"
                   >
                     View Menu
@@ -145,7 +153,7 @@ export function About() {
                     <span>Add Matho to Cart</span>
                   </button>
                   <button 
-                    onClick={onMenuOpen}
+                    onClick={() => scrollToSection('menu')}
                     className="px-6 py-3 border-2 border-orange-500 text-orange-500 rounded-full hover:bg-orange-50 transition-colors font-semibold"
                   >
                     View Menu

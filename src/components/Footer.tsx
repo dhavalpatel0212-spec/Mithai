@@ -4,13 +4,16 @@ import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Heart, Phone, Mail, MapPin } from 'lucide-react';
 
-interface FooterProps {
-  onMenuOpen: () => void;
-}
-
-export function Footer({ onMenuOpen }: FooterProps) {
+export function Footer() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-10%' });
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -47,7 +50,7 @@ export function Footer({ onMenuOpen }: FooterProps) {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <motion.button
-              onClick={onMenuOpen}
+              onClick={() => scrollToSection('menu')}
               className="px-8 py-4 bg-orange-500 text-white rounded-full text-lg font-semibold hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -125,7 +128,7 @@ export function Footer({ onMenuOpen }: FooterProps) {
             <h4 className="text-lg font-semibold text-gray-800 mb-4">Quick Links</h4>
             <div className="space-y-3">
               <button 
-                onClick={onMenuOpen}
+                onClick={() => scrollToSection('menu')}
                 className="block text-gray-600 hover:text-orange-500 transition-colors text-left"
               >
                 Our Menu

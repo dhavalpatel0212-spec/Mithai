@@ -283,6 +283,36 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                       </div>
                     </div>
 
+                    {/* Delivery Information */}
+                    <div className="bg-white rounded-lg p-4">
+                      <h4 className="font-semibold mb-3 text-gray-800 flex items-center space-x-2">
+                        <span>🚚</span>
+                        <span>Delivery Details</span>
+                      </h4>
+                      <div className="space-y-3">
+                        <input
+                          type="text"
+                          placeholder="Full Name"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        />
+                        <input
+                          type="tel"
+                          placeholder="Phone Number"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        />
+                        <textarea
+                          placeholder="Delivery Address"
+                          rows={2}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Postcode"
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                        />
+                      </div>
+                    </div>
+
                     {/* Payment Method */}
                     <div className="bg-white rounded-lg p-4">
                       <h4 className="font-semibold mb-3 text-gray-800 flex items-center space-x-2">
@@ -304,6 +334,19 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                           </label>
                         ))}
                       </div>
+                    </div>
+
+                    {/* Special Instructions */}
+                    <div className="bg-white rounded-lg p-4">
+                      <h4 className="font-semibold mb-3 text-gray-800 flex items-center space-x-2">
+                        <span>📝</span>
+                        <span>Special Instructions</span>
+                      </h4>
+                      <textarea
+                        placeholder="Any special requests or delivery notes..."
+                        rows={2}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent resize-none text-sm"
+                      />
                     </div>
 
                     <button

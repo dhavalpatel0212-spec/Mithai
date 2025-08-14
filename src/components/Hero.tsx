@@ -2,11 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown, Star } from 'lucide-react';
 
-interface HeroProps {
-  onMenuOpen: () => void;
-}
-
-export function Hero({ onMenuOpen }: HeroProps) {
+export function Hero() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -72,7 +68,7 @@ export function Hero({ onMenuOpen }: HeroProps) {
             transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.button
-              onClick={onMenuOpen}
+              onClick={() => scrollToSection('menu')}
               className="px-8 py-4 bg-orange-500 text-white rounded-full text-lg font-semibold hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
