@@ -15,13 +15,6 @@ export function Footer() {
     }
   };
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <footer ref={ref} className="bg-gradient-to-b from-orange-50 to-orange-100 py-20">
       <div className="container mx-auto px-6">
