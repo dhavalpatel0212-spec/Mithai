@@ -1,12 +1,13 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { ShoppingCart, Star, Plus, CheckCircle } from 'lucide-react';
+import { ShoppingCart, Star, Plus, Minus, CheckCircle } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { menuItems } from '../data/menuItems';
 import { MenuItem } from '../types';
 
 interface CartPreferences {
+  quantity: number;
   sugarLevel: 'less' | 'normal' | 'extra';
   extraDryFruits: boolean;
 }
@@ -17,6 +18,7 @@ export function MenuSection() {
   const { addToCart } = useCart();
   const [showPreferences, setShowPreferences] = useState<string | null>(null);
   const [preferences, setPreferences] = useState<CartPreferences>({
+    quantity: 1,
     sugarLevel: 'normal',
     extraDryFruits: false
   });
@@ -33,9 +35,11 @@ export function MenuSection() {
     setAddedToCart(item.id);
     setShowPreferences(null);
     
-    // Add to cart after a brief delay to show the animation
+    // Add to cart multiple times based on quantity
     setTimeout(() => {
-      addToCart(itemWithPreferences);
+      for (let i = 0; i < preferences.quantity; i++) {
+        addToCart(itemWithPreferences);
+      }
     }, 300);
     
     // Reset animation after 2.5 seconds
@@ -47,6 +51,7 @@ export function MenuSection() {
   const openPreferences = (itemId: string) => {
     setShowPreferences(itemId);
     setPreferences({
+      quantity: 1,
       sugarLevel: 'normal',
       extraDryFruits: false
     });
@@ -129,7 +134,7 @@ export function MenuSection() {
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.5 }}
                         >
-                          {preferences.sugarLevel} sugar • {preferences.extraDryFruits ? 'Extra dry fruits' : 'Standard'}
+                          Quantity: {preferences.quantity} • {preferences.sugarLevel} sugar • {preferences.extraDryFruits ? 'Extra dry fruits' : 'Standard'}
                         </motion.p>
                       </motion.div>
                     </motion.div>
@@ -168,7 +173,7 @@ export function MenuSection() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  <span>Customize & Add to Cart</span>
+                  <span>Add to Cart</span>
                 </motion.button>
               </div>
             </motion.div>
@@ -199,6 +204,29 @@ export function MenuSection() {
                 </div>
 
                 <div className="p-6 space-y-6">
+                  {/* Quantity Selection */}
+                  <div>
+                    <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">
+                      <span>🔢</span>
+                      <span>Quantity</span>
+                    </h4>
+                    <div className="flex items-center justify-center space-x-4 bg-gray-50 rounded-xl p-4">
+                      <button
+                        onClick={() => setPreferences(prev => ({ ...prev, quantity: Math.max(1, prev.quantity - 1) }))}
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-white hover:bg-gray-100 transition-colors border shadow-sm"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <span className="text-2xl font-bold text-gray-800 w-12 text-center">{preferences.quantity}</span>
+                      <button
+                        onClick={() => setPreferences(prev => ({ ...prev, quantity: prev.quantity + 1 }))}
+                        className="w-10 h-10 flex items-center justify-center rounded-full bg-white hover:bg-gray-100 transition-colors border shadow-sm"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
                   {/* Sugar Level */}
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">

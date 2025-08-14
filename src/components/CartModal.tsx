@@ -156,17 +156,18 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                         {/* Quantity Controls */}
                         <div className="flex items-center justify-between mb-4">
                           <span className="font-medium text-gray-700">Quantity</span>
-                          <div className="flex items-center space-x-3">
+                          <div className="flex items-center space-x-3 bg-white rounded-xl p-2 border">
                             <button
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                              className="w-8 h-8 flex items-center justify-center rounded-full bg-white hover:bg-gray-100 transition-colors border"
+                              onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-800"
+                              disabled={item.quantity <= 1}
                             >
                               <Minus className="w-4 h-4" />
                             </button>
-                            <span className="w-8 text-center font-semibold">{item.quantity}</span>
+                            <span className="w-12 text-center font-bold text-lg text-gray-800">{item.quantity}</span>
                             <button
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                              className="w-8 h-8 flex items-center justify-center rounded-full bg-white hover:bg-gray-100 transition-colors border"
+                              className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors text-gray-600 hover:text-gray-800"
                             >
                               <Plus className="w-4 h-4" />
                             </button>
