@@ -1,17 +1,20 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowDown, Star } from 'lucide-react';
+import React from "react";
+import { motion } from "framer-motion";
+import { ArrowDown, Star } from "lucide-react";
 
 export function Hero() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section
+      id="home"
+      className="relative h-screen flex items-center justify-center overflow-hidden"
+    >
       <div className="absolute inset-0 z-0">
         <img
           src="/attached_assets/Gemini_Generated_Image_44mhoy44mhoy44mh_1755210609882.png"
@@ -36,7 +39,10 @@ export function Hero() {
           >
             <span className="bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center space-x-2">
               <span>🇬🇧</span>
-              <span>UK's First Platform for Traditional Indian Sweets</span>
+              <span>
+                UK's First Platform for Traditional Indian Sweets From Our Home
+                to Yours
+              </span>
             </span>
           </motion.div>
 
@@ -56,9 +62,10 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
-            We're starting our journey with two precious family recipes - Kheer and Matho. 
-            Each dish crafted with pure milk, premium dry fruits, saffron, and yogurt, 
-            made with the same love that's been passed down through generations.
+            We're starting our journey with two precious family recipes - Kheer
+            and Matho. Each dish crafted with pure milk, premium dry fruits,
+            saffron, and yogurt, made with the same love that's been passed down
+            through generations.
           </motion.p>
 
           <motion.div
@@ -68,16 +75,16 @@ export function Hero() {
             transition={{ duration: 1.2, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
           >
             <motion.button
-              onClick={() => scrollToSection('menu')}
+              onClick={() => scrollToSection("menu")}
               className="px-8 py-4 bg-orange-500 text-white rounded-full text-lg font-semibold hover:bg-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
               Order Our Family Recipes
             </motion.button>
-            
+
             <motion.button
-              onClick={() => scrollToSection('about')}
+              onClick={() => scrollToSection("about")}
               className="px-8 py-4 border-2 border-white text-white rounded-full text-lg font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
@@ -93,10 +100,10 @@ export function Hero() {
             transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
           >
             {[
-              { icon: '🥛', text: 'Pure Milk' },
-              { icon: '✨', text: 'Golden Saffron' },
-              { icon: '🌰', text: 'Premium Dry Fruits' },
-              { icon: '❤️', text: 'Made with Love' }
+              { icon: "🥛", text: "Pure Milk" },
+              { icon: "✨", text: "Golden Saffron" },
+              { icon: "🌰", text: "Premium Dry Fruits" },
+              { icon: "❤️", text: "Made with Love" },
             ].map((item, index) => (
               <motion.div
                 key={index}
