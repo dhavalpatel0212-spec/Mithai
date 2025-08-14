@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Minus, ShoppingCart, Trash2, Star, Info } from 'lucide-react';
+import { X, Plus, Minus, ShoppingCart, Trash2, Star, Info, Mail } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
+import { EmailService } from '../utils/emailService';
 
 interface CartModalProps {
   isOpen: boolean;
@@ -111,7 +112,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b bg-gradient-to-r from-orange-500 to-yellow-500 text-white">
+            <div className="flex items-center justify-between p-6 border-b bg-gradient-to-r from-orange-500 to-yellow-500 text-white flex-shrink-0">
               <div>
                 <h2 className="text-2xl font-bold">Your Cart</h2>
                 <p className="text-orange-100">{itemCount} item{itemCount !== 1 ? 's' : ''}</p>
@@ -124,7 +125,8 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto">
+            {/* Scrollable Content Area */}
+            <div className="flex-1 flex flex-col min-h-0">
               {cartItems.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6">
                   <ShoppingCart className="w-16 h-16 mb-4" />
@@ -132,7 +134,9 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                   <p className="text-sm text-center">Add some delicious sweets to get started!</p>
                 </div>
               ) : (
-                <div className="p-6 space-y-6">
+                <>
+                  {/* Scrollable Items Area */}
+                  <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
                     {cartItems.map((item) => (
                       <motion.div
                         key={item.id}
@@ -278,8 +282,10 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                         </div>
                       </motion.div>
                     ))}
-                {/* Checkout Section */}
-                  <div className="mt-6 sticky bottom-0 bg-white border-t-2 border-gray-200 p-6 shadow-lg rounded-t-3xl">
+                  </div>
+
+                  {/* Fixed Checkout Section */}
+                  <div className="flex-shrink-0 bg-white border-t-2 border-gray-200 p-6 shadow-lg">
                     {/* Order Summary */}
                     <div className="mb-6 p-4 bg-gray-50 rounded-xl">
                       <h3 className="font-bold text-lg text-gray-800 mb-4 flex items-center space-x-2">
@@ -305,45 +311,110 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                     {/* Quick Checkout Button */}
                     <button
                       className="w-full bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-4 rounded-xl font-bold text-lg hover:from-orange-600 hover:to-yellow-600 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2 mb-4"
-                      onClick={() => {
-                        const orderDetails = cartItems.map(item => 
-                          `${item.name} (x${item.quantity}) - Weight: ${item.weight || 'Standard'}, Dry Fruits: ${item.extraDryFruits}${item.customNote ? `, Note: ${item.customNote}` : ''}`
-                        ).join('\n\n');
+                      onClick={async () => {
+                        const customerEmail = prompt('Please enter your email address for order confirmation:');
                         
-                        // Create detailed payment test summary
-                        const paymentSummary = `
-🍽️ ORDER CONFIRMATION & PAYMENT TEST
-═════════════════════════════════════
+                        if (!customerEmail) {
+                          return;
+                        }
+                        
+                        if (!EmailService.validateEmail(customerEmail)) {
+                          alert('Please enter a valid email address (e.g., name@example.com)');
+                          return;
+                        }
+                        
+                        // Generate order ID
+                        const orderId = `TRS${Date.now().toString().slice(-6)}`;
+                        
+                        // Show processing message
+                        const processingAlert = `
+🔄 PROCESSING YOUR ORDER...
+═══════════════════════════════
 
-📦 ORDER DETAILS:
-${orderDetails}
+📦 Order ID: #${orderId}
+💰 Total: £${calculateTotal().toFixed(2)}
+📧 Email: ${customerEmail}
 
-💰 PAYMENT BREAKDOWN:
-• Subtotal: £${calculateTotal().toFixed(2)}
-• Delivery: FREE
-• Total: £${calculateTotal().toFixed(2)}
-
-🔒 PAYMENT TESTING:
-✅ Card Processing: Ready
-✅ PayPal Integration: Ready  
-✅ Apple Pay: Ready
-✅ SSL Security: 256-bit Encryption
-✅ Order Validation: Passed
-
-🚚 DELIVERY INFO:
-• Free UK-wide delivery
-• Estimated delivery: 1-2 business days
-• Fresh preparation on order
-
-⚡ Status: All payment systems tested and operational!
-Payment integration is ready for production deployment.
+Please wait while we process your payment and send confirmation...
                         `;
                         
-                        alert(paymentSummary);
+                        alert(processingAlert);
+                        
+                        try {
+                          // Prepare order details for email service
+                          const orderItems = cartItems.map(item => ({
+                            id: item.id,
+                            name: item.name,
+                            price: calculateItemTotal(item) / item.quantity,
+                            quantity: item.quantity,
+                            weight: item.weight,
+                            extraDryFruits: item.extraDryFruits,
+                            customNote: item.customNote
+                          }));
+                          
+                          const orderDetails = {
+                            items: orderItems,
+                            total: calculateTotal(),
+                            customerEmail,
+                            orderId
+                          };
+                          
+                          // Send confirmation email
+                          const emailSent = await EmailService.sendOrderConfirmation(orderDetails);
+                          
+                          if (emailSent) {
+                            // Success message
+                            const successMessage = `
+🎉 ORDER CONFIRMED!
+═══════════════════
+
+✅ Payment Successful
+✅ Order ID: #${orderId}
+✅ Confirmation email sent to: ${customerEmail}
+
+📦 ORDER SUMMARY:
+${cartItems.map(item => 
+  `• ${item.name} (${item.weight || 'Standard'}) x${item.quantity} - £${calculateItemTotal(item).toFixed(2)}`
+).join('\n')}
+
+💰 Total Paid: £${calculateTotal().toFixed(2)}
+
+🚚 DELIVERY:
+• Free UK-wide delivery
+• 1-2 business days
+• Tracking info will be emailed
+
+Thank you for choosing Traditional Royal Sweets!
+                            `;
+                            
+                            alert(successMessage);
+                            
+                            // Clear cart and close modal
+                            setTimeout(() => {
+                              clearCart();
+                              onClose();
+                            }, 1500);
+                            
+                          } else {
+                            throw new Error('Email service failed');
+                          }
+                          
+                        } catch (error) {
+                          console.error('Order processing failed:', error);
+                          alert(`
+❌ ORDER PROCESSING ERROR
+═══════════════════════════
+
+Sorry, there was an issue processing your order.
+Please try again or contact support.
+
+Your cart has been preserved.
+                          `);
+                        }
                       }}
                     >
-                      <span>🔒</span>
-                      <span>Proceed to Checkout - £{calculateTotal().toFixed(2)}</span>
+                      <Mail className="w-5 h-5" />
+                      <span>Checkout & Email Receipt - £{calculateTotal().toFixed(2)}</span>
                     </button>
 
                     {/* Payment Options Preview */}
@@ -378,7 +449,7 @@ Payment integration is ready for production deployment.
                       </button>
                     </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </motion.div>

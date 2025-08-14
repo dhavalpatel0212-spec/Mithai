@@ -201,7 +201,7 @@ export function MenuSection() {
               onClick={() => setShowPreferences(null)}
             >
               <motion.div
-                className="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-hidden flex flex-col"
+                className="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden"
                 initial={{ opacity: 0, scale: 0.9, y: 50 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 50 }}
@@ -213,7 +213,7 @@ export function MenuSection() {
                   <p className="text-orange-100 mt-1">Make it perfect for your taste</p>
                 </div>
 
-                <div className="p-6 space-y-6 overflow-y-auto flex-1">
+                <div className="p-6 space-y-6 overflow-y-auto custom-scrollbar flex-1">
                   {/* Quantity Selection */}
                   <div>
                     <h4 className="font-semibold text-gray-800 mb-3 flex items-center space-x-2">
