@@ -58,7 +58,7 @@ export function About() {
             >
               <div className="relative">
                 <img
-                  src="https://images.pexels.com/photos/5560763/pexels-photo-5560763.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="/attached_assets/rice-kheer-instant-pot-featured-image_1755188662871.jpg"
                   alt="Kheer"
                   className="w-full h-64 object-cover"
                 />

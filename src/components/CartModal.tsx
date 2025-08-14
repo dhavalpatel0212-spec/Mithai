@@ -11,6 +11,10 @@ interface CartModalProps {
 export function CartModal({ isOpen, onClose }: CartModalProps) {
   const { items, updateQuantity, removeFromCart, total, clearCart } = useCart();
 
+  // This variable is used to calculate the number of items in the cart.
+  // It's calculated here to avoid recalculating it multiple times.
+  const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -23,7 +27,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-md h-full max-h-[90vh] overflow-hidden flex flex-col"
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-md h-[90vh] overflow-hidden flex flex-col"
             initial={{ opacity: 0, x: 400 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 400 }}
@@ -70,7 +74,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                           <div className="flex-1 min-w-0">
                             <h3 className="font-semibold text-gray-800 truncate">{item.name}</h3>
                             <p className="text-amber-500 font-bold">${item.price.toFixed(2)}</p>
-                            
+
                             <div className="flex items-center justify-between mt-3">
                               <div className="flex items-center space-x-3">
                                 <button
@@ -89,7 +93,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                                   <Plus className="w-4 h-4" />
                                 </button>
                               </div>
-                              
+
                               <button
                                 onClick={() => removeFromCart(item.id)}
                                 className="text-red-500 hover:text-red-700 text-sm font-medium"
@@ -104,27 +108,24 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                   </div>
                 </div>
 
-                <div className="border-t p-6 bg-gray-50">
-                  <div className="flex justify-between items-center mb-4">
-                    <span className="text-lg font-semibold text-gray-800">Total:</span>
-                    <span className="text-2xl font-bold text-amber-500">${total.toFixed(2)}</span>
+                <div className="border-t p-6 space-y-4 bg-gray-50 flex-shrink-0">
+                  <div className="flex justify-between text-xl font-bold">
+                    <span>Total:</span>
+                    <span className="text-amber-500">${total.toFixed(2)}</span>
                   </div>
-                  
-                  <div className="space-y-3">
-                    <button
-                      className="w-full bg-amber-500 text-white py-3 rounded-full hover:bg-amber-600 transition-colors font-semibold"
-                      onClick={() => alert('Checkout feature coming soon!')}
-                    >
-                      Checkout
-                    </button>
-                    
-                    <button
-                      onClick={clearCart}
-                      className="w-full bg-gray-200 text-gray-700 py-3 rounded-full hover:bg-gray-300 transition-colors font-medium"
-                    >
-                      Clear Cart
-                    </button>
-                  </div>
+                  <button
+                    className="w-full bg-amber-500 text-white py-3 rounded-full hover:bg-amber-600 transition-colors font-semibold"
+                    onClick={() => alert('Checkout feature coming soon!')}
+                  >
+                    Checkout
+                  </button>
+
+                  <button
+                    onClick={clearCart}
+                    className="w-full bg-gray-200 text-gray-700 py-3 rounded-full hover:bg-gray-300 transition-colors font-medium"
+                  >
+                    Clear Cart
+                  </button>
                 </div>
               </>
             )}
