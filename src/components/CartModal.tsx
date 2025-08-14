@@ -111,7 +111,7 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
           onClick={onClose}
         >
           <motion.div
-            className="bg-white rounded-3xl shadow-2xl w-full max-w-lg h-[95vh] flex flex-col"
+            className="bg-white rounded-3xl shadow-2xl w-full max-w-lg h-[95vh] flex flex-col overflow-hidden"
             initial={{ opacity: 0, x: 400 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 400 }}
@@ -132,17 +132,16 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               </button>
             </div>
 
-            <div className="flex-1 flex flex-col overflow-hidden">
-              {/* Cart Items */}
-              <div className="flex-1 py-4 overflow-y-auto custom-scrollbar">
-                {cartItems.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6">
-                    <ShoppingCart className="w-16 h-16 mb-4" />
-                    <p className="text-lg font-semibold mb-2">Your cart is empty</p>
-                    <p className="text-sm text-center">Add some delicious sweets to get started!</p>
-                  </div>
-                ) : (
-                  <div className="px-6 space-y-6">
+            <div className="flex-1 overflow-hidden">
+              {cartItems.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-full text-gray-500 px-6">
+                  <ShoppingCart className="w-16 h-16 mb-4" />
+                  <p className="text-lg font-semibold mb-2">Your cart is empty</p>
+                  <p className="text-sm text-center">Add some delicious sweets to get started!</p>
+                </div>
+              ) : (
+                <div className="h-full overflow-y-auto custom-scrollbar">
+                  <div className="p-6 space-y-6">
                     {cartItems.map((item) => (
                       <motion.div
                         key={item.id}
@@ -309,14 +308,10 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                         </div>
                       </motion.div>
                     ))}
-                  </div>
-                )}
-              </div>
 
-              {/* Checkout Section */}
-              {cartItems.length > 0 && (
-                <div className="border-t bg-gray-50 p-6 flex-shrink-0 max-h-[50vh] overflow-y-auto custom-scrollbar">
-                  <div className="space-y-4">
+                    {/* Checkout Section */}
+                    <div className="mt-8 border-t bg-gray-50 rounded-t-3xl p-6">
+                      <div className="space-y-4">
                     {/* Order Summary */}
                     <div className="bg-white rounded-lg p-4 space-y-3">
                       <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
@@ -430,10 +425,10 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
                         Clear Cart
                       </button>
                     </div>
+                    </div>
                   </div>
                 </div>
               )}
-            </div>
           </motion.div>
         </motion.div>
       )}

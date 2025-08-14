@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,35 +17,35 @@
 }
 
 /* Better scrollbar for cart */
-.overflow-y-auto::-webkit-scrollbar,
-.custom-scrollbar::-webkit-scrollbar {
-  width: 10px;
-}
-
-.overflow-y-auto::-webkit-scrollbar-track,
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 6px;
-  margin: 8px 0;
-}
-
-.overflow-y-auto::-webkit-scrollbar-thumb,
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #fb7185, #f97316);
-  border-radius: 6px;
-  border: 2px solid #f1f5f9;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.overflow-y-auto::-webkit-scrollbar-thumb:hover,
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #e11d48, #ea580c);
-  transform: scale(1.05);
-}
-
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: #fb7185 #f1f5f9;
+  -webkit-overflow-scrolling: touch;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f8fafc;
+  border-radius: 10px;
+  margin: 4px 0;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #f97316, #fb7185);
+  border-radius: 10px;
+  border: 1px solid #f8fafc;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ea580c, #e11d48);
+}
+
+.custom-scrollbar::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 /* Ensure modal content is scrollable */
@@ -54,9 +55,9 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* Fix iOS scrolling */
-@supports (-webkit-overflow-scrolling: touch) {
-  .custom-scrollbar {
-    -webkit-overflow-scrolling: touch;
-  }
+/* Fix body scroll lock */
+body.scroll-lock {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
 }
