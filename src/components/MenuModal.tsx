@@ -88,7 +88,7 @@ export function MenuModal({ isOpen, onClose }: MenuModalProps) {
                             <span className="text-2xl font-bold text-orange-500">£{item.price}</span>
                           </div>
                           <p className="text-gray-600 mb-4 leading-relaxed">{item.description}</p>
-                          
+
                           <div className="space-y-2 mb-4">
                             {item.ingredients.map((ingredient, i) => (
                               <div key={i} className="flex items-center space-x-2 text-sm text-gray-600">
@@ -103,7 +103,7 @@ export function MenuModal({ isOpen, onClose }: MenuModalProps) {
                               </div>
                             )}
                           </div>
-                          
+
                           <div className="flex space-x-3">
                             <button
                               onClick={(e) => {
@@ -163,12 +163,12 @@ export function MenuModal({ isOpen, onClose }: MenuModalProps) {
                       <X className="w-5 h-5" />
                     </button>
                   </div>
-                  
+
                   <div className="relative mb-4">
                     <img
                       src={selectedItem.image}
                       alt={selectedItem.name}
-                      className="w-full h-48 object-cover rounded-2xl"
+                      className="w-full h-48 object-cover rounded-2xl object-center"
                     />
                     {selectedItem.isFavorite && (
                       <div className="absolute top-3 left-3 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold flex items-center space-x-1">
@@ -177,9 +177,9 @@ export function MenuModal({ isOpen, onClose }: MenuModalProps) {
                       </div>
                     )}
                   </div>
-                  
+
                   <p className="text-gray-600 mb-6 leading-relaxed">{selectedItem.description}</p>
-                  
+
                   <div className="mb-6">
                     <h4 className="font-semibold text-gray-800 mb-3">What makes it special:</h4>
                     <div className="space-y-3">
@@ -197,11 +197,11 @@ export function MenuModal({ isOpen, onClose }: MenuModalProps) {
                       )}
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center justify-between mb-6">
                     <span className="text-3xl font-bold text-orange-500">£{selectedItem.price}</span>
                   </div>
-                  
+
                   <button
                     onClick={() => handleAddToCart(selectedItem)}
                     className="w-full bg-orange-500 text-white py-4 rounded-full hover:bg-orange-600 transition-colors font-semibold text-lg flex items-center justify-center space-x-2"

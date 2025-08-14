@@ -104,7 +104,7 @@ export function About() {
             >
               <div className="relative">
                 <img
-                  src="https://images.pexels.com/photos/1342124/pexels-photo-1342124.jpeg?auto=compress&cs=tinysrgb&w=800"
+                  src="/attached_assets/amrakhand-alphonso-flavoured-yogurt-shrikhand-260nw-608706788_1755188662871.webp"
                   alt="Matho"
                   className="w-full h-64 object-cover"
                 />

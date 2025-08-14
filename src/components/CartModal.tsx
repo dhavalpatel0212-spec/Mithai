@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plus, Minus, ShoppingCart } from 'lucide-react';
+import { X, Plus, Minus, ShoppingCart, Trash2 } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 
 interface CartModalProps {
@@ -44,91 +44,153 @@ export function CartModal({ isOpen, onClose }: CartModalProps) {
               </button>
             </div>
 
-            {items.length === 0 ? (
-              <div className="flex-1 flex items-center justify-center p-6">
-                <div className="text-center">
-                  <ShoppingCart className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500 text-lg">Your cart is empty</p>
-                  <p className="text-gray-400 text-sm mt-2">Add some delicious items to get started!</p>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className="flex-1 overflow-y-auto p-6">
-                  <div className="space-y-4">
+            <div className="flex-1 flex flex-col">
+              <div className="flex-1 py-6 overflow-y-auto">
+                {items.length === 0 ? (
+                  <div className="flex flex-col items-center justify-center h-full text-gray-500">
+                    <ShoppingCart className="w-16 h-16 mb-4" />
+                    <p className="text-lg font-semibold mb-2">Your cart is empty</p>
+                    <p className="text-sm">Add some delicious sweets to get started!</p>
+                  </div>
+                ) : (
+                  <div className="px-6">
                     {items.map((item) => (
                       <motion.div
                         key={item.id}
-                        className="bg-gray-50 rounded-2xl p-4"
-                        layout
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
+                        className="flex items-center space-x-4 py-4 border-b border-gray-200 last:border-0"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.3 }}
                       >
-                        <div className="flex items-start space-x-4">
-                          <img
-                            src={item.image}
-                            alt={item.name}
-                            className="w-16 h-16 object-cover rounded-xl"
-                          />
-                          <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-gray-800 truncate">{item.name}</h3>
-                            <p className="text-amber-500 font-bold">${item.price.toFixed(2)}</p>
-
-                            <div className="flex items-center justify-between mt-3">
-                              <div className="flex items-center space-x-3">
-                                <button
-                                  onClick={() => updateQuantity(item.id, Math.max(0, item.quantity - 1))}
-                                  className="w-8 h-8 bg-white border border-gray-200 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors"
-                                >
-                                  <Minus className="w-4 h-4" />
-                                </button>
-                                <span className="font-semibold text-gray-800 min-w-[2rem] text-center">
-                                  {item.quantity}
-                                </span>
-                                <button
-                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                  className="w-8 h-8 bg-white border border-gray-200 rounded-full flex items-center justify-center hover:bg-gray-100 transition-colors"
-                                >
-                                  <Plus className="w-4 h-4" />
-                                </button>
-                              </div>
-
-                              <button
-                                onClick={() => removeFromCart(item.id)}
-                                className="text-red-500 hover:text-red-700 text-sm font-medium"
-                              >
-                                Remove
-                              </button>
-                            </div>
-                          </div>
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-16 h-16 object-cover object-center rounded-lg"
+                        />
+                        <div className="flex-1">
+                          <h3 className="font-semibold text-gray-800">{item.name}</h3>
+                          <p className="text-orange-500 font-bold">£{item.price.toFixed(2)}</p>
                         </div>
+                        <div className="flex items-center space-x-2">
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <span className="w-8 text-center font-semibold">{item.quantity}</span>
+                          <button
+                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                        </div>
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="p-2 text-red-500 hover:bg-red-50 rounded-full transition-colors"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
                       </motion.div>
                     ))}
                   </div>
-                </div>
+                )}
+              </div>
 
-                <div className="border-t p-6 space-y-4 bg-gray-50 flex-shrink-0">
-                  <div className="flex justify-between text-xl font-bold">
-                    <span>Total:</span>
-                    <span className="text-amber-500">${total.toFixed(2)}</span>
+              {items.length > 0 && (
+                <div className="border-t bg-gray-50 p-6">
+                  <div className="space-y-4">
+                    {/* Order Summary */}
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>Subtotal:</span>
+                        <span>£{total.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>Delivery:</span>
+                        <span className="text-green-600">Free</span>
+                      </div>
+                      <div className="flex justify-between items-center text-lg font-semibold border-t pt-2">
+                        <span>Total:</span>
+                        <span>£{total.toFixed(2)}</span>
+                      </div>
+                    </div>
+
+                    {/* Payment Section */}
+                    <div className="space-y-3">
+                      <div className="bg-white rounded-lg border p-4">
+                        <h4 className="font-semibold mb-3 text-gray-800">Payment Method</h4>
+                        <div className="space-y-2">
+                          <label className="flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="payment" value="card" defaultChecked className="text-orange-500" />
+                            <span className="flex items-center space-x-2">
+                              <span>💳</span>
+                              <span>Credit/Debit Card</span>
+                            </span>
+                          </label>
+                          <label className="flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="payment" value="paypal" className="text-orange-500" />
+                            <span className="flex items-center space-x-2">
+                              <span>🅿️</span>
+                              <span>PayPal</span>
+                            </span>
+                          </label>
+                          <label className="flex items-center space-x-3 cursor-pointer">
+                            <input type="radio" name="payment" value="apple" className="text-orange-500" />
+                            <span className="flex items-center space-x-2">
+                              <span>📱</span>
+                              <span>Apple Pay</span>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div className="bg-white rounded-lg border p-4">
+                        <h4 className="font-semibold mb-3 text-gray-800">Delivery Information</h4>
+                        <div className="space-y-2 text-sm text-gray-600">
+                          <div className="flex items-center space-x-2">
+                            <span>🚚</span>
+                            <span>Free delivery across UK</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <span>⏰</span>
+                            <span>Delivered within 2-3 business days</span>
+                          </div>
+                          <div className="flex items-center space-x-2">
+                            <span>📦</span>
+                            <span>Carefully packaged to maintain freshness</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button
+                      className="w-full bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition-colors flex items-center justify-center space-x-2"
+                      onClick={() => {
+                        alert('Payment functionality will be integrated with Stripe/PayPal. Order total: £' + total.toFixed(2));
+                      }}
+                    >
+                      <span>🔒</span>
+                      <span>Secure Checkout - £{total.toFixed(2)}</span>
+                    </button>
+
+                    <div className="text-center text-xs text-gray-500">
+                      <p>🔒 Secure SSL encryption</p>
+                      <p>Your payment information is safe and secure</p>
+                    </div>
+
+                    <button
+                      onClick={clearCart}
+                      className="w-full text-gray-500 hover:text-gray-700 transition-colors text-sm"
+                    >
+                      Clear Cart
+                    </button>
                   </div>
-                  <button
-                    className="w-full bg-amber-500 text-white py-3 rounded-full hover:bg-amber-600 transition-colors font-semibold"
-                    onClick={() => alert('Checkout feature coming soon!')}
-                  >
-                    Checkout
-                  </button>
-
-                  <button
-                    onClick={clearCart}
-                    className="w-full bg-gray-200 text-gray-700 py-3 rounded-full hover:bg-gray-300 transition-colors font-medium"
-                  >
-                    Clear Cart
-                  </button>
                 </div>
-              </>
-            )}
+              )}
+            </div>
           </motion.div>
         </motion.div>
       )}
