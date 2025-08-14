@@ -76,9 +76,8 @@ export function About() {
                 </div>
               </div>
               <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
+                <div className="mb-4">
                   <h3 className="text-2xl font-bold text-gray-800">Kheer</h3>
-                  <span className="text-2xl font-bold text-orange-500">£8.99</span>
                 </div>
                 <p className="text-gray-600 mb-6">
                   A creamy, comforting dessert made from milk, rice, and a mix of premium dry fruits. 
@@ -118,9 +117,8 @@ export function About() {
                 />
               </div>
               <div className="p-8">
-                <div className="flex justify-between items-start mb-4">
+                <div className="mb-4">
                   <h3 className="text-2xl font-bold text-gray-800">Matho</h3>
-                  <span className="text-2xl font-bold text-orange-500">£9.99</span>
                 </div>
                 <p className="text-gray-600 mb-6">
                   A thick, rich, and traditional yogurt-based sweet dish. Made with the finest ingredients 
