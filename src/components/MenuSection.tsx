@@ -141,7 +141,10 @@ export function MenuSection() {
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.5 }}
                         >
-                          Quantity: {preferences.quantity} • Weight: {item.variants?.find(v => v.id === preferences.selectedVariant)?.weight || item.weight} • Dry fruits: {preferences.extraDryFruits}
+                          Quantity: {preferences.quantity} • Weight: {(() => {
+                            const currentItem = menuItems.find(menuItem => menuItem.id === item.id);
+                            return currentItem?.variants?.find(v => v.id === preferences.selectedVariant)?.weight || currentItem?.weight;
+                          })()} • Dry fruits: {preferences.extraDryFruits}
                         </motion.p>
                       </motion.div>
                     </motion.div>
@@ -242,36 +245,39 @@ export function MenuSection() {
                       <span>⚖️</span>
                       <span>Choose Size</span>
                     </h4>
-                    {item.variants && (
-                      <div className="space-y-2 mb-4">
-                        {item.variants.map((variant) => (
-                          <button
-                            key={variant.id}
-                            onClick={() => setPreferences(prev => ({ ...prev, selectedVariant: variant.id }))}
-                            className={`w-full p-3 rounded-xl border-2 transition-all duration-200 text-left ${
-                              preferences.selectedVariant === variant.id
-                                ? 'border-orange-500 bg-orange-50'
-                                : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50'
-                            }`}
-                          >
-                            <div className="flex justify-between items-center">
-                              <div>
-                                <div className="font-semibold">{variant.weight}</div>
-                                {variant.originalPrice && (
-                                  <div className="text-xs text-gray-500">
-                                    <span className="line-through">£{variant.originalPrice.toFixed(2)}</span>
-                                    <span className="ml-1 text-green-600 font-semibold">OFFER</span>
-                                  </div>
-                                )}
+                    {(() => {
+                      const currentItem = menuItems.find(item => item.id === showPreferences);
+                      return currentItem?.variants && (
+                        <div className="space-y-2 mb-4">
+                          {currentItem.variants.map((variant) => (
+                            <button
+                              key={variant.id}
+                              onClick={() => setPreferences(prev => ({ ...prev, selectedVariant: variant.id }))}
+                              className={`w-full p-3 rounded-xl border-2 transition-all duration-200 text-left ${
+                                preferences.selectedVariant === variant.id
+                                  ? 'border-orange-500 bg-orange-50'
+                                  : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50'
+                              }`}
+                            >
+                              <div className="flex justify-between items-center">
+                                <div>
+                                  <div className="font-semibold">{variant.weight}</div>
+                                  {variant.originalPrice && (
+                                    <div className="text-xs text-gray-500">
+                                      <span className="line-through">£{variant.originalPrice.toFixed(2)}</span>
+                                      <span className="ml-1 text-green-600 font-semibold">OFFER</span>
+                                    </div>
+                                  )}
+                                </div>
+                                <div className="text-right">
+                                  <div className="font-bold text-orange-600">£{variant.price.toFixed(2)}</div>
+                                </div>
                               </div>
-                              <div className="text-right">
-                                <div className="font-bold text-orange-600">£{variant.price.toFixed(2)}</div>
-                              </div>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    )}
+                            </button>
+                          ))}
+                        </div>
+                      );
+                    })()}
                   </div>
 
                   {/* Dry Fruits Selection */}
